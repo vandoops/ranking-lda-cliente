@@ -30,16 +30,18 @@ margin-bottom:30px;
 /* CONTAINER */
 .container{
 max-width:1200px;
+width:100%;
 margin:auto;
 padding:20px;
 margin-top:90px;
+align-self:center;
+flex:1 0 auto;
 }
 
 .ranking-container{
-display:flex;
+display:grid;
+grid-template-columns:repeat(2, minmax(0, 1fr));
 gap:30px;
-justify-content:center;
-flex-wrap:wrap;
 }
 
 .ranking-box{
@@ -48,8 +50,7 @@ padding:20px;
 border-radius:10px;
 color:#1a1a1a;
 width:100%;
-max-width:520px;
-margin-bottom:50px;
+margin-bottom:0;
 border:1px solid #e0e0e0;
 }
 
@@ -201,6 +202,10 @@ height:auto;
 
 /* RESPONSIVO */
 @media(max-width:768px){
+
+.ranking-container{
+grid-template-columns:1fr;
+}
 
 h1{
 font-size:28px;

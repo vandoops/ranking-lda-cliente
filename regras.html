@@ -82,7 +82,7 @@
           <div class="menu-left">
             <a href="index.html" class="aba">HOME</a>
             <a href="ranking.html" class="aba">RANKING</a>
-            <a href="galeria.html" class="aba">FOTOS CAMPEONATO</a>
+            <a href="galeria.html" class="aba">CAMPEÕES</a>
             <a href="galeria-gols.html" class="aba">GALERIA DE GOLS</a>
             <a href="regras.html" class="aba aba-active">REGRAS</a>
           </div>
@@ -93,7 +93,7 @@
         </div>
       </div>
       <div class="header-right">
-        <img src="logopng.png" alt="Logo Copa Bruxaria" class="header-logo-container">
+        <img src="logopng.png" alt="Logo Copa LDA" class="header-logo-container">
       </div>
     </div>
     <div class="banner-pink"></div>
@@ -183,12 +183,29 @@
   </script>
 
   <script>
-    if ('serviceWorker' in navigator) {
+    if ('serviceWorker' in navigator && window.location.protocol !== 'file:') {
       navigator.serviceWorker.register('/sw.js')
         .then(reg => console.log('SW registrado em regras.html:', reg.scope))
         .catch(err => console.warn('Falha ao registrar SW em regras.html:', err));
     }
   </script>
+
+<footer class="site-footer">
+  <div class="footer-content">
+    <div class="footer-brand">
+      <img src="logopng.png" alt="Logo LDA" class="footer-logo">
+      <span>LDA - Liga dos Amigos Efootball</span>
+    </div>
+
+    <div class="footer-text">
+      <p>© 2025 LDA — Liga dos Amigos Efootball</p>
+    </div>
+
+    <div class="footer-credit">
+      <p>Criador: <strong>EVANDRO PRATES</strong> - <span>FLUXAR DEV</span></p>
+    </div>
+  </div>
+</footer>
 
 </body>
 </html>

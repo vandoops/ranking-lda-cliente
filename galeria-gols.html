@@ -25,7 +25,7 @@
         <div class="menu-left">
           <a href="index.html" class="aba">HOME</a>
           <a href="ranking.html" class="aba">RANKING</a>
-          <a href="galeria.html" class="aba">FOTOS CAMPEONATO</a>
+          <a href="galeria.html" class="aba">CAMPEÕES</a>
           <a href="galeria-gols.html" class="aba aba-active">GALERIA DE GOLS</a>
           <a href="regras.html" class="aba">REGRAS</a>
         </div>
@@ -36,7 +36,7 @@
       </div>
     </div>
     <div class="header-right">
-      <img src="logopng.png" alt="Logo Copa Bruxaria" class="header-logo-container">
+      <img src="logopng.png" alt="Logo Copa LDA" class="header-logo-container">
     </div>
   </div>
   <div class="banner-pink"></div>
@@ -46,11 +46,15 @@
   // Proteção para admin e players
   document.querySelectorAll('.menu-abas a[href="admin.html"], .menu-abas a[href="players.html"]').forEach(link => {
     link.addEventListener('click', (e) => {
-        if(localStorage.getItem('Ligalda') !== 'true') {
+      if(localStorage.getItem('Ligalda') !== 'true') {
+        e.preventDefault();
+        window.location.href = 'login.html';
+      }
+    });
   });
 </script>
 
-<h1 style="text-align:center;margin-top:30px;">⚽ Galeria de Gols</h1>
+<h1 style="text-align:center;margin-top:30px;"> GOLS MAIS BONITOS LDA</h1>
 
 <div class="galeria-gols" id="galeriaGols"></div>
 
@@ -141,5 +145,22 @@ galeria.appendChild(card);
   });
 })();
 </script>
+
+<footer class="site-footer">
+  <div class="footer-content">
+    <div class="footer-brand">
+      <img src="logopng.png" alt="Logo LDA" class="footer-logo">
+      <span>LDA - Liga dos Amigos Efootball</span>
+    </div>
+
+    <div class="footer-text">
+      <p>© 2025 LDA — Liga dos Amigos Efootball</p>
+    </div>
+
+    <div class="footer-credit">
+      <p>Criador: <strong>EVANDRO PRATES</strong> - <span>FLUXAR DEV</span></p>
+    </div>
+  </div>
+</footer>
 </body>
 </html>

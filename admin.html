@@ -29,7 +29,7 @@
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
-<body>
+<body class="admin-page">
 
   
 
@@ -50,9 +50,9 @@ window.location.href = "login.html";
         <div class="menu-hamburger" role="button" aria-label="Abrir menu">&#9776;</div>
         <div class="menu-abas">
           <div class="menu-left">
-            <a href="home.html" class="aba">HOME</a>
+            <a href="index.html" class="aba">HOME</a>
             <a href="index.html" class="aba">RANKING</a>
-            <a href="galeria.html" class="aba">FOTOS CAMPEONATO</a>
+            <a href="galeria.html" class="aba">CAMPEÕES</a>
             <a href="galeria-gols.html" class="aba">GALERIA DE GOLS</a>
             <a href="regras.html" class="aba">REGRAS</a>
           </div>
@@ -63,7 +63,7 @@ window.location.href = "login.html";
         </div>
       </div>
       <div class="header-right">
-        <img src="logopng.png" alt="Logo Copa Bruxaria" class="header-logo-container">
+        <img src="logopng.png" alt="Logo Copa LDA" class="header-logo-container">
         <button id="btnLogout" class="header-logout btn-logout-menu">Sair</button>
       </div>
     </div>
@@ -75,6 +75,8 @@ window.location.href = "login.html";
 <div class="container">
 
 <main class="main">
+
+<h1 class="admin-title">ADMINISTRAÇÃO</h1>
 
 <div class="card-admin">
 
@@ -131,8 +133,8 @@ window.location.href = "login.html";
 <h3>⚽  Gol Mais bonito do Campeonato</h3>
 <input type="file" id="videoGol" accept="video/*">
 
-<label>Nome de quem fez essa Obra de arte</label>
-<input type="text" id="donoGol" placeholder="Ex: Bruxo da Silva">
+<label>Nome de quem fez esse gol</label>
+<input type="text" id="donoGol" placeholder="Ex: Nome do jogador">
 
 <br><br>
 
@@ -143,8 +145,10 @@ window.location.href = "login.html";
 <h3>⚽ Pontuação Players</h3>
 
 <button id="importarArena">IMPORTAR DO ARENA</button>
+<br>
+<br>
+<h3>⚽ OU SELECIONAR PLAYER POR PLAYER </h3>
 
-<label>Player</label>
 <select id="playerPontuacao"></select>
 
 <label>Pontuação Atual</label>
@@ -175,7 +179,7 @@ window.location.href = "login.html";
 
 </div>
 </div>
-<h3>Campeonatos bruxaria</h3>
+<h3>Campeonatos LDA</h3>
 <div id="listaTitulos"></div>
 
 <hr>
@@ -952,11 +956,28 @@ $('#playerPontuacao').select2();
 })();
 </script>
 <script>
-  if ('serviceWorker' in navigator) {
+  if ('serviceWorker' in navigator && window.location.protocol !== 'file:') {
     navigator.serviceWorker.register('/sw.js')
       .then(reg => console.log('SW registrado em admin.html:', reg.scope))
       .catch(err => console.warn('Falha ao registrar SW em admin.html:', err));
   }
 </script>
+
+<footer class="site-footer">
+  <div class="footer-content">
+    <div class="footer-brand">
+      <img src="logopng.png" alt="Logo LDA" class="footer-logo">
+      <span>LDA - Liga dos Amigos Efootball</span>
+    </div>
+
+    <div class="footer-text">
+      <p>© 2025 LDA — Liga dos Amigos Efootball</p>
+    </div>
+
+    <div class="footer-credit">
+      <p>Criador: <strong>EVANDRO PRATES</strong> - <span>FLUXAR DEV</span></p>
+    </div>
+  </div>
+</footer>
 </body>
 </html>

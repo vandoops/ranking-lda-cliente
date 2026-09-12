@@ -21,7 +21,7 @@
 
 </head>
 
-<body>
+<body class="ranking-page">
 
 
   <!-- HEADER BANNER -->
@@ -34,7 +34,7 @@
           <div class="menu-left">
             <a href="index.html" class="aba">HOME</a>
             <a href="ranking.html" class="aba aba-active">RANKING</a>
-            <a href="galeria.html" class="aba">FOTOS CAMPEONATO</a>
+            <a href="galeria.html" class="aba">CAMPEÕES</a>
             <a href="galeria-gols.html" class="aba">GALERIA DE GOLS</a>
             <a href="regras.html" class="aba">REGRAS</a>
           </div>
@@ -45,7 +45,7 @@
         </div>
       </div>
       <div class="header-right">
-        <img src="logopng.png" alt="Logo Copa Bruxaria" class="header-logo-container">
+        <img src="logopng.png" alt="Logo Copa LDA" class="header-logo-container">
       </div>
     </div>
     <div class="banner-pink"></div>
@@ -64,7 +64,7 @@
   </script>
 
  <div class="container">
-<h1>Ranking Bruxaria EC</h1>
+<h1>Ranking LDA</h1>
 
 <div class="ranking-container">
 
@@ -321,10 +321,10 @@ const viceLanterna = lista[lista.length-2] ? lista[lista.length-2][0] : "";
 const lanterna = lista[lista.length-1][0];
 
 document.getElementById("mensagemZoeira").innerHTML =
-`<div class="msg">👑 ${lider} Deve estar usando magia negra." 😆 </div>
-<div class="msg">🔥 ${vice} Tá só esperando o líder errar a poção." 🧪</div>
-<div class="msg">⚠️ ${viceLanterna} A magia desse aqui tá vencida." ⚠️</div>
-<div class="msg">🐢 ${lanterna} Nem com magia negra tá funcionando.</div>`;
+`<div class="msg">👑 ${lider} Vai com calma meu filho." 😆 </div>
+<div class="msg">🔥 ${vice} Tá só esperando o líder vacilar." 🧪</div>
+<div class="msg">⚠️ ${viceLanterna} iiiiih o penultimo é considearo o segundo perdedor kkk." ⚠️</div>
+<div class="msg">🐢 ${lanterna} Dança gatinho dança.</div>`;
 
 }
 
@@ -391,7 +391,7 @@ modal.style.display = "flex";
 
 <!-- manifest apk -->
 <script>
-if ("serviceWorker" in navigator) {
+if ("serviceWorker" in navigator && window.location.protocol !== "file:") {
   navigator.serviceWorker.register("/sw.js")
     .then(() => console.log("SW registrado"));
 }
@@ -422,5 +422,20 @@ if ("serviceWorker" in navigator) {
   });
 })();
 </script>
-</body>
+<footer class="site-footer">
+  <div class="footer-content">
+    <div class="footer-brand">
+      <img src="logopng.png" alt="Logo LDA" class="footer-logo">
+      <span>LDA - Liga dos Amigos Efootball</span>
+    </div>
+
+    <div class="footer-text">
+      <p>© 2025 LDA — Liga dos Amigos Efootball</p>
+    </div>
+
+    <div class="footer-credit">
+      <p>Criador: <strong>EVANDRO PRATES</strong> - <span>FLUXAR DEV</span></p>
+    </div>
+  </div>
+</footer></body>
 </html>

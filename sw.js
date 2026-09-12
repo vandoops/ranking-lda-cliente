@@ -1,4 +1,4 @@
-const CACHE_NAME = "bruxaria-cache-v2";
+const CACHE_NAME = "lda-cache-v4";
 const urlsToCache = [
   "/",
   "/index.html",
