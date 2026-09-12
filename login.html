@@ -37,6 +37,12 @@ Sistema oficial do ranking LDA
 <h2> Acesso LDA</h2>
 
 <input 
+type="email" 
+id="emailInput"
+placeholder="Digite seu e-mail"
+>
+
+<input 
 type="password" 
 id="senhaInput"
 placeholder="Digite a senha"
@@ -54,27 +60,38 @@ Entrar
 
 </div>
 
-<script>
+<script type="module">
 
-const SENHA = "LdaLigaAdmin";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
+const firebaseConfig = {
+	apiKey: "AIzaSyBq2SSpFMNoH1s3bvck6dSdjBm4EyUUJ-8",
+	authDomain: "ranking-lda.firebaseapp.com",
+	projectId: "ranking-lda",
+	storageBucket: "ranking-lda.firebasestorage.app",
+	messagingSenderId: "907822809490",
+	appId: "1:907822809490:web:1b936d300e7b196eb2014b"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+const emailInput = document.getElementById("emailInput");
 const senhaInput = document.getElementById("senhaInput");
 const btnLogin = document.getElementById("btnLogin");
 const erroLogin = document.getElementById("erroLogin");
 
-btnLogin.onclick = () => {
+btnLogin.onclick = async () => {
+	erroLogin.textContent = "";
 
-if(senhaInput.value === SENHA){
-
-localStorage.setItem("Ligalda","true");
-
-window.location.href = "index.html";
-
-}else{
-
-erroLogin.textContent = "Senha incorreta!";
-
-}
+	try {
+		await signInWithEmailAndPassword(auth, emailInput.value.trim(), senhaInput.value);
+		localStorage.setItem("Ligalda", "true");
+		window.location.href = "index.html";
+	} catch (error) {
+		erroLogin.textContent = "E-mail ou senha incorretos!";
+	}
 
 };
 
