@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Galeria de Gols</title>
+
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="header.css">
+<link rel="stylesheet" href="gols.css">
+
+
+</head>
+
+<body>
+
+<!-- HEADER BANNER -->
+<div class="header-banner">
+  <div class="banner-stripe"></div>
+  <div class="header-content">
+    <div class="header-left">
+      <div class="menu-hamburger" role="button" aria-label="Abrir menu">&#9776;</div>
+      <div class="menu-abas">
+        <div class="menu-left">
+          <a href="index.html" class="aba">HOME</a>
+          <a href="ranking.html" class="aba">RANKING</a>
+          <a href="galeria.html" class="aba">FOTOS CAMPEONATO</a>
+          <a href="galeria-gols.html" class="aba aba-active">GALERIA DE GOLS</a>
+          <a href="regras.html" class="aba">REGRAS</a>
+        </div>
+        <div class="menu-right">
+          <a href="admin.html" class="aba aba-admin">ADMIN</a>
+          <a href="players.html" class="aba aba-admin">PLAYERS</a>
+        </div>
+      </div>
+    </div>
+    <div class="header-right">
+      <img src="logopng.png" alt="Logo Copa Bruxaria" class="header-logo-container">
+    </div>
+  </div>
+  <div class="banner-pink"></div>
+</div>
+
+<script>
+  // Proteção para admin e players
+  document.querySelectorAll('.menu-abas a[href="admin.html"], .menu-abas a[href="players.html"]').forEach(link => {
+    link.addEventListener('click', (e) => {
+      if(localStorage.getItem('bruxaria_logado') !== 'true') {
+        e.preventDefault();
+        window.location.href = 'login.html';
+      }
+    });
+  });
+</script>
+
+<h1 style="text-align:center;margin-top:30px;">⚽ Galeria de Gols</h1>
+
+<div class="galeria-gols" id="galeriaGols"></div>
+
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+
+import {
+getFirestore,
+collection,
+onSnapshot
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+
+const firebaseConfig = {
+
+apiKey: "SUA_API_KEY",
+authDomain: "ranking-lda.firebaseapp.com",
+projectId: "ranking-lda",
+storageBucket: "ranking-lda.firebasestorage.app",
+messagingSenderId: "907822809490",
+appId: "1:907822809490:web:6a10959a84949e3456e126"
+
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const galeria = document.getElementById("galeriaGols");
+
+
+onSnapshot(collection(db,"campeonatos"),(snap)=>{
+
+galeria.innerHTML="";
+
+snap.forEach(docSnap=>{
+
+const data = docSnap.data();
+
+if(!data.videoGol) return;
+
+const card = document.createElement("div");
+
+card.className="card-gol";
+
+card.innerHTML=`
+
+<video controls>
+<source src="${data.videoGol}" type="video/mp4">
+</video>
+
+<div class="info-gol">
+<h3>🏆 ${data.nomeCampeonato}</h3>
+<p>⚽ Gol de: <b>${data.donoGol || "Desconhecido"}</b></p>
+</div>
+
+`;
+
+galeria.appendChild(card);
+
+});
+
+});
+
+</script>
+
+<script>
+  const hamburger = document.querySelector('.menu-hamburger');
+  const menuAbas = document.querySelector('.menu-abas');
+  if (hamburger && menuAbas) {
+    hamburger.addEventListener('click', () => {
+      menuAbas.classList.toggle('active'); // abre e fecha o menu
+    });
+  }
+</script>
+
+<script>
+(function(){
+  const path = window.location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.menu-links a, .menu-abas a').forEach(a=>{
+    const href = a.getAttribute('href');
+    if(href === path || (href === 'index.html' && (path === '' || path === ''))){
+      a.classList.add('selected');
+      a.classList.add('aba-active');
+    } else {
+      a.classList.remove('selected');
+      a.classList.remove('aba-active');
+    }
+  });
+})();
+</script>
+</body>
+</html>

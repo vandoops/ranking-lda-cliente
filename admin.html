@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin</title>
+
+<link rel="icon" href="logopng.png" type="image/png">
+<link rel="stylesheet" href="style.css?v=2.1">
+<link rel="stylesheet" href="header.css">
+
+<style>
+  /* Estilos inline do editor de regras para garantir aplicação */
+  .card-editar-regras-container {
+    background: linear-gradient(135deg, #f5f7fa 0%, #ffffff 100%) !important;
+    border: 2px solid #1a66cc !important;
+    border-radius: 16px !important;
+    padding: 0 !important;
+    margin: 40px auto !important;
+    max-width: 1000px !important;
+    box-shadow: 0 8px 32px rgba(26, 102, 204, 0.15) !important;
+    overflow: hidden !important;
+  }
+</style>
+
+
+
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+  
+
+  <script>
+    
+
+if(localStorage.getItem("bruxaria_logado") !== "true"){
+window.location.href = "login.html";
+}
+
+</script>
+
+  <!-- HEADER BANNER -->
+  <div class="header-banner">
+    <div class="banner-stripe"></div>
+    <div class="header-content">
+      <div class="header-left">
+        <div class="menu-hamburger" role="button" aria-label="Abrir menu">&#9776;</div>
+        <div class="menu-abas">
+          <div class="menu-left">
+            <a href="home.html" class="aba">HOME</a>
+            <a href="index.html" class="aba">RANKING</a>
+            <a href="galeria.html" class="aba">FOTOS CAMPEONATO</a>
+            <a href="galeria-gols.html" class="aba">GALERIA DE GOLS</a>
+            <a href="regras.html" class="aba">REGRAS</a>
+          </div>
+          <div class="menu-right">
+            <a href="admin.html" class="aba aba-admin aba-active">ADMIN</a>
+            <a href="players.html" class="aba aba-admin">PLAYERS</a>
+          </div>
+        </div>
+      </div>
+      <div class="header-right">
+        <img src="logopng.png" alt="Logo Copa Bruxaria" class="header-logo-container">
+        <button id="btnLogout" class="header-logout btn-logout-menu">Sair</button>
+      </div>
+    </div>
+    <div class="banner-pink"></div>
+  </div>
+
+
+
+<div class="container">
+
+<main class="main">
+
+<div class="card-admin">
+
+<h2>Criar Campeonato</h2>
+
+<label>Nome do Campeonato</label>
+<input type="text" id="nomeCampeonato">
+
+<h3>Pódio</h3>
+
+<div class="linha-podio">
+<label>🥇 Campeão</label>
+<select id="primeiroLugar"></select>
+</div>
+
+<div class="linha-podio">
+<label>🥈 Vice</label>
+<select id="segundoLugar"></select>
+</div>
+
+<div class="linha-podio">
+<label>🥉 Terceiro</label>
+<select id="terceiroLugar"></select>
+</div>
+
+<hr>
+
+<h3>📊 Estatísticas</h3>
+
+<div class="linha-estat">
+<label>⚽ Melhor Ataque</label>
+<select id="melhorAtaque"></select>
+</div>
+
+<div class="linha-estat">
+<label>🛡 Melhor Defesa</label>
+<select id="melhorDefesa"></select>
+</div>
+
+<div class="linha-estat">
+<label>❌ Pior Ataque</label>
+<select id="piorAtaque"></select>
+</div>
+
+<div class="linha-estat">
+<label>🥅 Pior Defesa</label>
+<select id="piorDefesa"></select>
+</div>
+<hr>
+
+<h3>📸 Imagem do Campeão</h3>
+<input type="file" id="imagemCampeonato">
+
+<h3>⚽  Gol Mais bonito do Campeonato</h3>
+<input type="file" id="videoGol" accept="video/*">
+
+<label>Nome de quem fez essa Obra de arte</label>
+<input type="text" id="donoGol" placeholder="Ex: Bruxo da Silva">
+
+<br><br>
+
+<button id="criarCampeonato">Salvar Campeonato</button>
+
+<hr>
+
+<h3>⚽ Pontuação Players</h3>
+
+<button id="importarArena">IMPORTAR DO ARENA</button>
+
+<label>Player</label>
+<select id="playerPontuacao"></select>
+
+<label>Pontuação Atual</label>
+<input type="number" id="pontos" min="0">
+
+<button id="salvarPontuacao">Salvar Pontuação</button>
+
+<div class="card-admin">
+
+<div class="camp-header" id="headerPontuacoes">
+<h4>📊 Pontuações Salvas</h4>
+<span class="seta">▼</span>
+</div>
+
+<div class="camp-detalhes" id="detalhesPontuacoes">
+
+<table class="tabela-pontos">
+<thead>
+<tr>
+<th>Player</th>
+<th>PONTOS</th>
+<th></th>
+</tr>
+</thead>
+
+<tbody id="listaPontuacoes"></tbody>
+</table>
+
+</div>
+</div>
+<h3>Campeonatos bruxaria</h3>
+<div id="listaTitulos"></div>
+
+<hr>
+
+<div class="card-editar-regras-container">
+  <div class="regras-header">
+    <h2>📝 Editor de Regras</h2>
+    <p class="regras-subtitle">Edite as regras do campeonato que serão exibidas para todos os jogadores</p>
+  </div>
+
+  <div class="regras-editor-box">
+    <div class="regras-toolbar">
+      <div class="regras-toolbar-group">
+        <button class="btn-toolbar btn-format" id="btnNegrito" title="Negrito (Ctrl+B)"><strong>N</strong></button>
+        <button class="btn-toolbar btn-format" id="btnItálico" title="Itálico (Ctrl+I)"><em>I</em></button>
+        <button class="btn-toolbar btn-format" id="btnSublinhado" title="Sublinhado (Ctrl+U)"><u>U</u></button>
+      </div>
+      
+      <div class="regras-toolbar-group">
+        <button class="btn-toolbar" id="btnLimparRegras" title="Limpar tudo">🗑️ Limpar</button>
+        <button class="btn-toolbar" id="btnCopiarRegras" title="Copiar texto">📋 Copiar</button>
+      </div>
+
+      <span class="regras-counter">
+        <span id="charCount">0</span> / 5000 caracteres
+      </span>
+    </div>
+
+    <div id="editorRegras" class="regras-editor-text" contenteditable="true" role="textbox" aria-label="Editor de regras"></div>
+
+    <div class="regras-actions">
+      <button id="salvarRegras" class="btn-salvar-regras">💾 Salvar Regras</button>
+      <div id="mensagemRegras" class="regras-feedback"></div>
+    </div>
+  </div>
+</div>
+
+</main>
+</div>
+
+<script>
+// Editor de Regras com Formatação
+document.addEventListener('DOMContentLoaded', () => {
+  const editor = document.getElementById('editorRegras');
+  const salvarBtn = document.getElementById('salvarRegras');
+  const mensagemRegras = document.getElementById('mensagemRegras');
+  const charCount = document.getElementById('charCount');
+  const btnLimpar = document.getElementById('btnLimparRegras');
+  const btnCopiar = document.getElementById('btnCopiarRegras');
+  
+  // Configuração Firebase para salvar regras globalmente
+  const firebaseConfig = {
+  apiKey: "AIzaSyBq2SSpFMNoH1s3bvck6dSdjBm4EyUUJ-8",
+  authDomain: "ranking-lda.firebaseapp.com",
+  projectId: "ranking-lda",
+  storageBucket: "ranking-lda.firebasestorage.app",
+  messagingSenderId: "907822809490",
+  appId: "1:907822809490:web:1b936d300e7b196eb2014b"
+};
+
+  let firestoreReady = null;
+  let firestoreDb = null;
+  let firestoreDoc = null;
+  let firestoreSetDoc = null;
+  let firestoreServerTimestamp = null;
+
+  firestoreReady = import('https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js')
+    .then(({ initializeApp }) => {
+      return import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js')
+        .then((firestore) => {
+          const app = initializeApp(firebaseConfig);
+          firestoreDb = firestore.getFirestore(app);
+          firestoreDoc = firestore.doc;
+          firestoreSetDoc = firestore.setDoc;
+          firestoreServerTimestamp = firestore.serverTimestamp;
+        });
+    })
+    .catch((error) => {
+      console.warn('Firebase não disponível no admin:', error);
+    });
+
+  // Botões de formatação
+  const btnNegrito = document.getElementById('btnNegrito');
+  const btnItálico = document.getElementById('btnItálico');
+  const btnSublinhado = document.getElementById('btnSublinhado');
+  
+  // Função para atualizar contador
+  const atualizarContador = () => {
+    const texto = editor.innerText;
+    charCount.textContent = texto.length;
+    if (texto.length > 5000) {
+      // Remover últimos caracteres se exceder
+      const nodes = editor.childNodes;
+      let totalChars = 0;
+      for (let i = 0; i < nodes.length; i++) {
+        totalChars += nodes[i].textContent.length;
+        if (totalChars > 5000) {
+          nodes[i].remove();
+          i--;
+          totalChars = Array.from(editor.innerText).length;
+        }
+      }
+    }
+  };
+  
+  // Carregar regras do localStorage
+  const regrasSalvas = localStorage.getItem('bruxaria_regras');
+  if (regrasSalvas) {
+    editor.innerHTML = regrasSalvas;
+    atualizarContador();
+  } else {
+    editor.innerHTML = '<p style="color: #a0aec0; font-style: italic;">✏️ Digite as regras do campeonato aqui...</p>';
+  }
+  
+  // Focar no editor e remover placeholder
+  editor.addEventListener('click', () => {
+    if (editor.innerHTML.includes('Digite as regras')) {
+      editor.innerHTML = '';
+    }
+  });
+  
+  // Atualizar contador enquanto digita
+  editor.addEventListener('input', atualizarContador);
+  
+  // Botões de formatação
+  btnNegrito.addEventListener('click', (e) => {
+    e.preventDefault();
+    document.execCommand('bold', false, null);
+    editor.focus();
+    btnNegrito.classList.toggle('btn-active');
+  });
+  
+  btnItálico.addEventListener('click', (e) => {
+    e.preventDefault();
+    document.execCommand('italic', false, null);
+    editor.focus();
+    btnItálico.classList.toggle('btn-active');
+  });
+  
+  btnSublinhado.addEventListener('click', (e) => {
+    e.preventDefault();
+    document.execCommand('underline', false, null);
+    editor.focus();
+    btnSublinhado.classList.toggle('btn-active');
+  });
+  
+  // Atalhos de teclado
+  editor.addEventListener('keydown', (e) => {
+    if (e.ctrlKey || e.metaKey) {
+      if (e.key === 'b') {
+        e.preventDefault();
+        btnNegrito.click();
+      } else if (e.key === 'i') {
+        e.preventDefault();
+        btnItálico.click();
+      } else if (e.key === 'u') {
+        e.preventDefault();
+        btnSublinhado.click();
+      } else if (e.key === 's') {
+        e.preventDefault();
+        salvarBtn.click();
+      }
+    }
+  });
+  
+  // Limpar regras
+  btnLimpar.addEventListener('click', () => {
+    if (confirm('⚠️ Tem certeza que deseja limpar tudo?')) {
+      editor.innerHTML = '';
+      atualizarContador();
+      mensagemRegras.innerHTML = '<span class="feedback-info">🗑️ Texto limpo!</span>';
+      setTimeout(() => { mensagemRegras.innerHTML = ''; }, 2000);
+      editor.focus();
+    }
+  });
+  
+  // Copiar texto
+  btnCopiar.addEventListener('click', () => {
+    const texto = editor.innerText.trim();
+    if (texto && !texto.includes('Digite as regras')) {
+      navigator.clipboard.writeText(texto).then(() => {
+        mensagemRegras.innerHTML = '<span class="feedback-success">📋 Copiado para área de transferência!</span>';
+        setTimeout(() => { mensagemRegras.innerHTML = ''; }, 2000);
+      });
+    } else {
+      mensagemRegras.innerHTML = '<span class="feedback-error">❌ Nada para copiar!</span>';
+      setTimeout(() => { mensagemRegras.innerHTML = ''; }, 2000);
+    }
+  });
+  
+  // Salvar regras
+  salvarBtn.addEventListener('click', async () => {
+    const regrasHTML = editor.innerHTML.trim();
+    const regrasTexto = editor.innerText.trim();
+    
+    if (!regrasTexto || regrasTexto.includes('Digite as regras')) {
+      mensagemRegras.innerHTML = '<span class="feedback-error">❌ Por favor, digite as regras!</span>';
+      editor.focus();
+      editor.classList.add('shake');
+      setTimeout(() => editor.classList.remove('shake'), 500);
+      return;
+    }
+    
+    localStorage.setItem('bruxaria_regras', regrasHTML);
+    localStorage.setItem('bruxaria_regras_texto', regrasTexto);
+
+    await firestoreReady;
+    let salvaServidor = true;
+    if (firestoreSetDoc && firestoreDoc && firestoreDb && firestoreServerTimestamp) {
+      try {
+        await firestoreSetDoc(firestoreDoc(firestoreDb, 'config', 'regras'), {
+          html: regrasHTML,
+          texto: regrasTexto,
+          updated: firestoreServerTimestamp()
+        });
+      } catch (error) {
+        salvaServidor = false;
+        console.error('Erro salvando regras no Firebase:', error);
+      }
+    } else {
+      salvaServidor = false;
+      console.warn('Firebase ainda não está pronto, salvando apenas localmente.');
+    }
+
+    mensagemRegras.innerHTML = `<span class="feedback-success">✅ Regras salvas com sucesso! ${salvaServidor ? '' : '⚠️ Regras salvas localmente, mas não no servidor.'}</span>`;
+    salvarBtn.classList.add('btn-success');
+    
+    setTimeout(() => {
+      mensagemRegras.innerHTML = '';
+      salvarBtn.classList.remove('btn-success');
+    }, 3000);
+  });
+  
+  // Prevenir tags perigosas
+  editor.addEventListener('paste', (e) => {
+    e.preventDefault();
+    const texto = e.clipboardData.getData('text/plain');
+    document.execCommand('insertText', false, texto);
+  });
+});
+</script>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { 
+getFirestore, 
+collection, 
+addDoc, 
+onSnapshot,
+deleteDoc,
+doc,
+query,
+orderBy,
+serverTimestamp,
+getDocs,
+updateDoc,
+setDoc,
+getDoc
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+
+/* ================= FIREBASE ================= */
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBq2SSpFMNoH1s3bvck6dSdjBm4EyUUJ-8",
+  authDomain: "ranking-lda.firebaseapp.com",
+  projectId: "ranking-lda",
+  storageBucket: "ranking-lda.firebasestorage.app",
+  messagingSenderId: "907822809490",
+  appId: "1:907822809490:web:1b936d300e7b196eb2014b"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// Expor algumas funções Firebase para o script não-module que salva regras
+window.firestoreDb = db;
+window.firestoreDoc = doc;
+window.firestoreSetDoc = setDoc;
+window.firestoreServerTimestamp = serverTimestamp;
+
+/* ================= ELEMENTOS ================= */
+
+const primeiro = document.getElementById("primeiroLugar");
+const segundo = document.getElementById("segundoLugar");
+const terceiro = document.getElementById("terceiroLugar");
+
+const melhorAtaque = document.getElementById("melhorAtaque");
+const melhorDefesa = document.getElementById("melhorDefesa");
+const piorAtaque = document.getElementById("piorAtaque");
+const piorDefesa = document.getElementById("piorDefesa");
+
+
+
+/* ================= CARREGAR PLAYERS NOS SELECTS ================= */
+
+onSnapshot(collection(db, "players"), (snap) => {
+
+primeiro.innerHTML = "";
+segundo.innerHTML = "";
+terceiro.innerHTML = "";
+melhorAtaque.innerHTML = "";
+melhorDefesa.innerHTML = "";
+piorAtaque.innerHTML = "";
+piorDefesa.innerHTML = "";
+
+snap.forEach(docSnap => {
+
+const nome = docSnap.data().nome;
+
+primeiro.innerHTML += `<option value="${nome}">${nome}</option>`;
+segundo.innerHTML += `<option value="${nome}">${nome}</option>`;
+terceiro.innerHTML += `<option value="${nome}">${nome}</option>`;
+melhorAtaque.innerHTML += `<option value="${nome}">${nome}</option>`;
+melhorDefesa.innerHTML += `<option value="${nome}">${nome}</option>`;
+piorAtaque.innerHTML += `<option value="${nome}">${nome}</option>`;
+piorDefesa.innerHTML += `<option value="${nome}">${nome}</option>`;
+
+});
+
+});
+
+const playerPontuacao = document.getElementById("playerPontuacao");
+
+onSnapshot(collection(db, "players"), (snap) => {
+
+playerPontuacao.innerHTML = `<option value="" selected disabled>Selecione um player</option>`;
+
+snap.forEach(docSnap => {
+
+const nome = docSnap.data().nome;
+
+playerPontuacao.innerHTML += `<option value="${nome}">${nome}</option>`;
+
+});
+
+});
+
+/* ================= CRIAR CAMPEONATO ================= */
+
+document.getElementById("criarCampeonato").onclick = async () => {
+
+const nomeCamp = document.getElementById("nomeCampeonato").value;
+const imagem = document.getElementById("imagemCampeonato").files[0];
+const video = document.getElementById("videoGol").files[0];
+const donoGol = document.getElementById("donoGol").value;
+
+if (!nomeCamp) return alert("Digite o nome!");
+
+let imagemURL = "";
+let videoURL = "";
+
+
+// ===== upload imagem =====
+
+if(imagem){
+
+const formData = new FormData();
+
+formData.append("file", imagem);
+formData.append("upload_preset", "campeonato_upload");
+
+const res = await fetch("https://api.cloudinary.com/v1_1/pfejdmrl/image/upload",{
+method:"POST",
+body:formData
+});
+
+const data = await res.json();
+
+imagemURL = data.secure_url;
+
+}
+
+
+// ===== upload video =====
+
+if(video){
+
+const formDataVideo = new FormData();
+
+formDataVideo.append("file", video);
+formDataVideo.append("upload_preset", "campeonato_upload");
+
+const resVideo = await fetch("https://api.cloudinary.com/v1_1/pfejdmrl/video/upload",{
+method:"POST",
+body:formDataVideo
+});
+
+const dataVideo = await resVideo.json();
+
+videoURL = dataVideo.secure_url;
+
+}
+
+
+// ===== salvar campeonato =====
+
+await addDoc(collection(db,"campeonatos"),{
+
+nomeCampeonato: nomeCamp,
+imagem: imagemURL,
+videoGol: videoURL,
+donoGol: donoGol,
+
+primeiro: primeiro.value,
+segundo: segundo.value,
+terceiro: terceiro.value,
+
+melhorAtaque: melhorAtaque.value,
+melhorDefesa: melhorDefesa.value,
+piorAtaque: piorAtaque.value,
+piorDefesa: piorDefesa.value,
+
+data: serverTimestamp()
+
+});
+
+alert("Campeonato salvo!");
+
+};
+
+
+/* ================= LISTAR CAMPEONATOS ================= */
+
+const campeonatosRef = query(
+collection(db, "campeonatos"),
+orderBy("data", "asc")
+);
+
+onSnapshot(campeonatosRef, (snap) => {
+
+  
+
+const container = document.getElementById("listaTitulos");
+container.innerHTML = "";
+const ranking = {};
+
+snap.forEach(docSnap => {
+
+const data = docSnap.data();
+
+if(!ranking[data.primeiro]){
+ranking[data.primeiro] = {ouro:0,prata:0,bronze:0};
+}
+
+if(!ranking[data.segundo]){
+ranking[data.segundo] = {ouro:0,prata:0,bronze:0};
+}
+
+if(!ranking[data.terceiro]){
+ranking[data.terceiro] = {ouro:0,prata:0,bronze:0};
+}
+
+ranking[data.primeiro].ouro++;
+ranking[data.segundo].prata++;
+ranking[data.terceiro].bronze++;
+
+const bloco = document.createElement("div");
+bloco.className = "card-admin";
+
+bloco.innerHTML = `
+<div class="camp-header">
+<h4>🏆 ${data.nomeCampeonato}</h4>
+<span class="seta">▼</span>
+</div>
+
+<div class="camp-detalhes">
+<p>🥇 ${data.primeiro}</p>
+<p>🥈 ${data.segundo}</p>
+<p>🥉 ${data.terceiro}</p>
+
+<hr>
+
+<p>⚽ Melhor Ataque: ${data.melhorAtaque}</p>
+<p>🛡️ Melhor Defesa: ${data.melhorDefesa}</p>
+<p>❌ Pior Ataque: ${data.piorAtaque}</p>
+<p>🚨 Pior Defesa: ${data.piorDefesa}</p>
+
+<button class="btnExcluir">Excluir</button>
+</div>
+`;
+
+const header = bloco.querySelector(".camp-header");
+const detalhes = bloco.querySelector(".camp-detalhes");
+const seta = bloco.querySelector(".seta");
+const btnExcluir = bloco.querySelector(".btnExcluir");
+
+detalhes.style.display = "none";
+
+header.onclick = () => {
+
+const aberto = detalhes.style.display === "block";
+detalhes.style.display = aberto ? "none" : "block";
+seta.textContent = aberto ? "▼" : "▲";
+
+};
+
+btnExcluir.onclick = async () => {
+
+if (confirm("Excluir campeonato?")) {
+
+await deleteDoc(doc(db, "campeonatos", docSnap.id));
+
+}
+
+};
+
+container.appendChild(bloco);
+
+const rankingFinal = [];
+
+for(const player in ranking){
+
+const ouro = ranking[player].ouro;
+const prata = ranking[player].prata;
+const bronze = ranking[player].bronze;
+
+const pontos = (ouro * 5) + (prata * 3) + (bronze * 1);
+
+rankingFinal.push({
+player,
+ouro,
+prata,
+bronze,
+pontos
+});
+
+}
+
+rankingFinal.sort((a,b)=> b.pontos - a.pontos);
+
+console.log(rankingFinal);
+
+});
+
+});
+
+
+document.getElementById("salvarPontuacao").onclick = async () => {
+
+const player = document.getElementById("playerPontuacao").value;
+
+if (!player) {
+  alert("Selecione um player!");
+  return;
+}
+const pontos = Number(document.getElementById("pontos").value);
+
+const snap = await getDocs(collection(db,"pontuacoes"));
+
+let encontrado = null;
+
+snap.forEach(docSnap => {
+  if(docSnap.data().player === player){
+    encontrado = docSnap;
+  }
+});
+
+if(encontrado){
+
+  await updateDoc(doc(db,"pontuacoes", encontrado.id), {
+    pontos: pontos
+  });
+
+}else{
+
+  await addDoc(collection(db,"pontuacoes"), {
+    player: player,
+    pontos: pontos,
+    data: serverTimestamp()
+  });
+
+}
+
+alert("Pontuação salva!");
+};
+
+
+/* ================= LISTAR PONTUAÇÕES ================= */
+
+
+
+onSnapshot(collection(db,"pontuacoes"), (snap) => {
+
+const lista = document.getElementById("listaPontuacoes");
+lista.innerHTML = "";
+
+snap.forEach(docSnap => {
+
+  const data = docSnap.data();
+
+  const linha = document.createElement("tr");
+
+  linha.innerHTML = `
+    <td>${data.player}</td>
+    <td><b>${data.pontos}</b></td>
+    <td>
+      <button class="btnEditarPontuacao">✏️</button>
+      <button class="btnExcluirPontuacao">🗑</button>
+    </td>
+  `;
+
+  // EXCLUIR
+  linha.querySelector(".btnExcluirPontuacao").onclick = async () => {
+    if(confirm("Excluir pontuação?")){
+      await deleteDoc(doc(db,"pontuacoes",docSnap.id));
+    }
+  };
+
+  // EDITAR
+  linha.querySelector(".btnEditarPontuacao").onclick = async () => {
+
+    const novoValor = prompt(
+      "Nova pontuação para " + data.player + ":",
+      data.pontos
+    );
+
+    if(novoValor === null) return;
+
+    await updateDoc(doc(db,"pontuacoes",docSnap.id), {
+      pontos: Number(novoValor)
+    });
+
+    alert("Pontuação atualizada!");
+  };
+
+  lista.appendChild(linha);
+
+});
+
+});
+
+
+
+
+
+const headerPontuacoes = document.getElementById("headerPontuacoes");
+const detalhesPontuacoes = document.getElementById("detalhesPontuacoes");
+const setaPontuacoes = headerPontuacoes.querySelector(".seta");
+
+detalhesPontuacoes.style.display = "none";
+
+headerPontuacoes.onclick = () => {
+
+const aberto = detalhesPontuacoes.style.display === "block";
+
+detalhesPontuacoes.style.display = aberto ? "none" : "block";
+setaPontuacoes.textContent = aberto ? "▼" : "▲";
+
+};
+
+document.getElementById("importarArena").onclick = async () => {
+
+  const texto = prompt("Cole aqui o ranking (copiado do site)");
+
+  if (!texto) return;
+
+  const linhas = texto.split("\n");
+
+  let dados = [];
+
+ linhas.forEach(linha => {
+
+  const colunas = linha.split("\t");
+
+  if (colunas.length >= 3) {
+
+    let nome = colunas[1].replace("-", "").trim();
+    let pontos = Number(colunas[2]);
+
+    if (nome && !isNaN(pontos)) {
+      dados.push({
+        nome: nome,
+        pontos: pontos
+      });
+    }
+
+  }
+
+});
+
+  if (dados.length === 0) {
+    alert("Não deu certo, copia o ranking inteiro.");
+    return;
+  }
+
+  const snap = await getDocs(collection(db,"pontuacoes"));
+
+  for (let dado of dados) {
+
+    let encontrado = null;
+
+    snap.forEach(docSnap => {
+      if(docSnap.data().player.toLowerCase() === dado.nome.toLowerCase()){
+        encontrado = docSnap;
+      }
+    });
+
+    if(encontrado){
+
+      await updateDoc(doc(db,"pontuacoes", encontrado.id), {
+        pontos: dado.pontos
+      });
+
+    } else {
+
+      await addDoc(collection(db,"pontuacoes"), {
+        player: dado.nome,
+        pontos: dado.pontos,
+        data: serverTimestamp()
+      });
+
+    }
+
+  }
+
+  alert("Ranking atualizado!");
+};
+</script>
+
+<script>
+  const hamburger = document.querySelector('.menu-hamburger');
+  const menuAbas = document.querySelector('.menu-abas');
+  if (hamburger && menuAbas) {
+    hamburger.addEventListener('click', () => {
+      menuAbas.classList.toggle('active');
+    });
+  }
+</script>
+
+<script>
+document.getElementById("btnLogout").onclick = () => {
+    localStorage.removeItem("bruxaria_logado");
+
+    window.location.href = "login.html";
+
+  };
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+
+$(document).ready(function(){
+
+$('#primeiroLugar').select2({placeholder:"Buscar player..."});
+$('#segundoLugar').select2({placeholder:"Buscar player..."});
+$('#terceiroLugar').select2({placeholder:"Buscar player..."});
+
+$('#melhorAtaque').select2();
+$('#melhorDefesa').select2();
+$('#piorAtaque').select2();
+$('#piorDefesa').select2();
+$('#playerPontuacao').select2();
+
+});
+
+</script>
+
+<script>
+(function(){
+  const path = window.location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.menu-links a, .menu-abas a').forEach(a=>{
+    const href = a.getAttribute('href');
+    if(href === path || (href === 'home.html' && (path === '' || path === ''))){
+      a.classList.add('selected');
+      a.classList.add('aba-active');
+    } else {
+      a.classList.remove('selected');
+      a.classList.remove('aba-active');
+    }
+  });
+})();
+</script>
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js')
+      .then(reg => console.log('SW registrado em admin.html:', reg.scope))
+      .catch(err => console.warn('Falha ao registrar SW em admin.html:', err));
+  }
+</script>
+</body>
+</html>
