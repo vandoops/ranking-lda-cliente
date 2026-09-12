@@ -46,11 +46,7 @@
   // Proteção para admin e players
   document.querySelectorAll('.menu-abas a[href="admin.html"], .menu-abas a[href="players.html"]').forEach(link => {
     link.addEventListener('click', (e) => {
-      if(localStorage.getItem('bruxaria_logado') !== 'true') {
-        e.preventDefault();
-        window.location.href = 'login.html';
-      }
-    });
+        if(localStorage.getItem('Ligalda') !== 'true') {
   });
 </script>
 
