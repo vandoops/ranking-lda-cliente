@@ -1,5 +1,6 @@
 body {
   margin: 0;
+  overflow-x: hidden;
   font-family: 'Segoe UI', sans-serif;
   background: radial-gradient(circle at top, #1d1f22 0%, #0c0d10 35%, #07080a 100%);
   color: #f4f4f4;
@@ -9,6 +10,7 @@ body {
 }
 
 .container{
+  box-sizing: border-box;
   width: 100%;
   max-width: 860px;
   margin: 0 auto;
@@ -38,6 +40,7 @@ h2 {
 }
 
 input{
+  box-sizing: border-box;
   width: 100%;
   padding: 13px 14px;
   border-radius: 10px;
@@ -62,6 +65,17 @@ button{
 button:hover{
   transform: translateY(-2px);
   box-shadow: 0 6px 16px rgba(240, 199, 93, 0.25);
+}
+
+.header-logout {
+  background: #d32f2f !important;
+  border-color: #d32f2f !important;
+  color: #ffffff !important;
+}
+
+.header-logout:hover {
+  background: #a61c1c !important;
+  border-color: #a61c1c !important;
 }
 
 ul{
@@ -105,4 +119,64 @@ li:hover{
 .menu-logo img {
   height: 50px; /* ajusta a altura da logo */
   width: auto;
+}
+
+@media (max-width: 768px) {
+  .container {
+    max-width: 100%;
+    padding: 30px 16px;
+  }
+
+  .card {
+    padding: 24px 18px;
+    border-radius: 16px;
+  }
+
+  h1 {
+    font-size: 30px;
+    margin-bottom: 22px;
+  }
+
+  h2 {
+    font-size: 22px;
+  }
+
+  li {
+    text-align: left;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 24px 12px;
+  }
+
+  .card {
+    padding: 20px 14px;
+    margin-bottom: 22px;
+  }
+
+  h1 {
+    font-size: 24px;
+    letter-spacing: 1px;
+  }
+
+  h2 {
+    font-size: 19px;
+  }
+
+  .card button {
+    width: 100%;
+  }
+
+  li {
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 13px 14px;
+  }
+
+  .excluir {
+    width: auto !important;
+    margin-left: auto;
+  }
 }

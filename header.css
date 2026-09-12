@@ -558,6 +558,138 @@ main,
   }
 }
 
+/* Segundo modelo visual do menu compartilhado */
+.header-content {
+  position: relative;
+  padding: 18px 30px 20px;
+}
+
+.menu-abas {
+  gap: 18px;
+  padding: 6px;
+  background: rgba(5, 6, 8, 0.78);
+  border: 1px solid rgba(240, 199, 93, 0.3);
+  border-radius: 14px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.28);
+}
+
+.menu-left,
+.menu-right {
+  gap: 2px;
+}
+
+.aba {
+  padding: 10px 13px;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  color: #dfe3ea;
+  font-size: 0.78rem;
+}
+
+.aba:hover {
+  background: rgba(240, 199, 93, 0.14);
+  border-color: rgba(240, 199, 93, 0.45);
+  color: var(--accent-gold);
+  transform: none;
+}
+
+.aba-active {
+  background: linear-gradient(180deg, #f7dd8c 0%, #d4af37 100%);
+  border-color: var(--accent-gold);
+  color: var(--text-dark);
+  box-shadow: 0 4px 14px rgba(240, 199, 93, 0.28);
+}
+
+.aba-admin,
+.aba-admin:hover,
+.aba-admin:active,
+.aba-admin:visited,
+.aba-admin:focus {
+  background: linear-gradient(180deg, #d8c371 0%, #d4af37 100%);
+  border-color: var(--accent-gold-strong);
+  color: var(--text-dark) !important;
+}
+
+@media (max-width: 480px) {
+  .header-content {
+    padding: 8px 12px;
+  }
+
+  .menu-abas {
+    padding: 10px;
+    border-radius: 12px;
+  }
+
+  .menu-left,
+  .menu-right {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .aba {
+    width: 100%;
+    padding: 9px 10px;
+  }
+}
+
+/* Modelo centralizado: identidade acima e navegação em faixa própria */
+.header-content {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 14px;
+  padding: 16px 30px 18px;
+}
+
+.header-right {
+  order: -1;
+  justify-content: center;
+  min-height: 62px;
+}
+
+.header-logo-container {
+  width: 64px;
+  height: 64px;
+}
+
+.header-left {
+  width: 100%;
+}
+
+.menu-abas {
+  justify-content: center;
+  width: 100%;
+}
+
+.menu-left,
+.menu-right {
+  justify-content: center;
+}
+
+@media (max-width: 480px) {
+  .header-content {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+  }
+
+  .header-right {
+    order: initial;
+    min-height: 0;
+    justify-content: flex-end;
+  }
+
+  .header-left {
+    width: auto;
+  }
+
+  .menu-abas {
+    justify-content: initial;
+    width: auto;
+  }
+}
+
 /* Pequenos ajustes de transição para links e botões */
 .menu-links a,
 .btn-logout-menu,
