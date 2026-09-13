@@ -16,6 +16,53 @@
   --logout-red-hover: #a61c1c;
 }
 
+.page-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 20000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  background: radial-gradient(circle at center, #262a30 0%, #101216 45%, #07080a 100%);
+  color: var(--accent-gold);
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.page-loader-hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.loader-logo {
+  width: 120px;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 0 16px rgba(240, 199, 93, 0.4));
+  animation: loader-pulse 1.4s ease-in-out infinite;
+}
+
+.loader-spinner {
+  width: 26px;
+  height: 26px;
+  border: 3px solid rgba(243, 213, 122, 0.22);
+  border-top-color: var(--accent-gold);
+  border-radius: 50%;
+  animation: loader-spin 0.75s linear infinite;
+}
+
+@keyframes loader-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes loader-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.82; }
+  50% { transform: scale(1.04); opacity: 1; }
+}
+
 /* HEADER BANNER */
 .header-banner {
   background: linear-gradient(180deg, #0b0d10 0%, #111418 100%);
@@ -701,6 +748,13 @@ main,
 .menu-logo img {
   height: 50px; /* ajusta a altura da logo */
   width: auto;
+}
+
+/* Mantém a logo inteira quando o cabeçalho fica estreito. */
+.header-logo-container {
+  flex: 0 0 auto;
+  object-fit: contain;
+  display: block;
 }
 
 @keyframes fadeMenu {

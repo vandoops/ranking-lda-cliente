@@ -21,6 +21,46 @@
     box-shadow: 0 8px 32px rgba(26, 102, 204, 0.15) !important;
     overflow: hidden !important;
   }
+
+  @media (max-width: 768px) {
+    .admin-page > .container {
+      padding: 20px 12px;
+    }
+
+    .card-admin {
+      padding: 18px 14px;
+      border-radius: 14px;
+    }
+
+    .linha-podio,
+    .linha-estat {
+      display: block;
+    }
+
+    .linha-podio label,
+    .linha-estat label {
+      display: block;
+      min-width: 0;
+      margin-bottom: 4px;
+    }
+
+    .linha-podio select,
+    .linha-estat select,
+    .select2-container {
+      width: 100% !important;
+      max-width: 100%;
+    }
+
+    .tabela-pontos {
+      display: block;
+      max-width: 100%;
+      overflow-x: auto;
+    }
+
+    .card-editar-regras-container {
+      margin: 24px 0 !important;
+    }
+  }
 </style>
 
 
@@ -42,7 +82,7 @@
         <div class="menu-abas">
           <div class="menu-left">
             <a href="index.html" class="aba">HOME</a>
-            <a href="index.html" class="aba">RANKING</a>
+            <a href="ranking.html" class="aba">RANKING</a>
             <a href="galeria.html" class="aba">CAMPEÕES</a>
             <a href="galeria-gols.html" class="aba">GALERIA DE GOLS</a>
             <a href="regras.html" class="aba">REGRAS</a>
@@ -71,7 +111,7 @@
 
 <div class="card-admin">
 
-<h2>Criar Campeonato</h2>
+<h2>Registrar Campeonato</h2>
 
 <label>Nome do Campeonato</label>
 <input type="text" id="nomeCampeonato">
@@ -492,6 +532,15 @@ melhorDefesa.innerHTML = "";
 piorAtaque.innerHTML = "";
 piorDefesa.innerHTML = "";
 
+const opcaoInicial = '<option value="" selected disabled>Selecione um player</option>';
+primeiro.innerHTML = opcaoInicial;
+segundo.innerHTML = opcaoInicial;
+terceiro.innerHTML = opcaoInicial;
+melhorAtaque.innerHTML = opcaoInicial;
+melhorDefesa.innerHTML = opcaoInicial;
+piorAtaque.innerHTML = opcaoInicial;
+piorDefesa.innerHTML = opcaoInicial;
+
 snap.forEach(docSnap => {
 
 const nome = docSnap.data().nome;
@@ -534,6 +583,12 @@ const video = document.getElementById("videoGol").files[0];
 const donoGol = document.getElementById("donoGol").value;
 
 if (!nomeCamp) return alert("Digite o nome!");
+
+if (!primeiro.value || !segundo.value || !terceiro.value ||
+    !melhorAtaque.value || !melhorDefesa.value ||
+    !piorAtaque.value || !piorDefesa.value) {
+  return alert("Selecione os players do campeonato!");
+}
 
 let imagemURL = "";
 let videoURL = "";
@@ -925,15 +980,15 @@ document.getElementById("importarArena").onclick = async () => {
 
 $(document).ready(function(){
 
-$('#primeiroLugar').select2({placeholder:"Buscar player..."});
-$('#segundoLugar').select2({placeholder:"Buscar player..."});
-$('#terceiroLugar').select2({placeholder:"Buscar player..."});
+$('#primeiroLugar').select2({placeholder:"Buscar player...", width:"100%"});
+$('#segundoLugar').select2({placeholder:"Buscar player...", width:"100%"});
+$('#terceiroLugar').select2({placeholder:"Buscar player...", width:"100%"});
 
-$('#melhorAtaque').select2();
-$('#melhorDefesa').select2();
-$('#piorAtaque').select2();
-$('#piorDefesa').select2();
-$('#playerPontuacao').select2();
+$('#melhorAtaque').select2({width:"100%"});
+$('#melhorDefesa').select2({width:"100%"});
+$('#piorAtaque').select2({width:"100%"});
+$('#piorDefesa').select2({width:"100%"});
+$('#playerPontuacao').select2({width:"100%"});
 
 });
 
@@ -978,5 +1033,6 @@ $('#playerPontuacao').select2();
     </div>
   </div>
 </footer>
+<script src="page-loader.js"></script>
 </body>
 </html>
